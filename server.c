@@ -6,13 +6,8 @@
 /*   By: biphuyal <biphuyal@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 16:28:30 by biphuyal          #+#    #+#             */
-/*   Updated: 2025/07/16 16:48:52 by biphuyal         ###   ########.fr       */
+/*   Updated: 2025/07/16 20:55:36 by biphuyal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
-
-pid_t getpid(void)
-{
-	printf("Server PID: %d\n", getpid());
-}
