@@ -6,16 +6,18 @@
 #    By: biphuyal <biphuyal@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/16 20:55:45 by biphuyal          #+#    #+#              #
-#    Updated: 2025/07/16 20:57:03 by biphuyal         ###   ########.fr        #
+#    Updated: 2025/07/17 18:09:25 by biphuyal         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minitalk
-CC = gcc
+CC = cc
 CFLAGS = -Wall -Wextra -Werror
 SRCS = server.c client.c
-OBJS = $(SRCS:.c=.o)
 RM = rm -f
+TOUCH = touch
+
+OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)
 
@@ -27,9 +29,11 @@ $(NAME): $(OBJS)
 
 clean:
 	$(RM) $(OBJS)
+	$(TOUCH) $(BONUS)
 
 fclean: clean
 	$(RM) $(NAME)
+	$(RM) $(BONUS)
 
 re: fclean all
 
