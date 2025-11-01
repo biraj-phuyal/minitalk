@@ -6,16 +6,19 @@
 /*   By: biphuyal <biphuyal@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 18:27:18 by biphuyal          #+#    #+#             */
-/*   Updated: 2025/10/31 18:44:08 by biphuyal         ###   ########.fr       */
+/*   Updated: 2025/11/01 18:34:45 by biphuyal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <errno.h>
 #include <signal.h>
 #include <unistd.h>
+#include <stdlib.h>
+#include <sys/types.h>
 
 void	ft_putnbr(long pid)
 {
-	char character;
+	char	character;
 
 	if (pid >= 10)
 		ft_putnbr(pid / 10);
@@ -23,14 +26,66 @@ void	ft_putnbr(long pid)
 	write(1, &character, 1);
 }
 
-static void	handler(int sig, siginfo_t *info, void *useless)
+char	*ft_strjoin(char *s1, char c)
 {
-	
+	size_t		i;
+	size_t		j;
+	size_t		total_length;
+	char		*string;
+
+	i = 0;
+	j = 0;
+	total_length = 0;
+	while (s1[total_length])
+		total_length++;
+	total_length += 2;
+	string = (char *)malloc(total_length);
+	if (!string)
+		return (NULL);
+	while (s1[i])
+		string[i++] = s1[i++];
+	while (s1[i] < total_length)
+		string[i++] = c;
+	string[i] = '\0';
+	free(s1);
+	return (string);
 }
 
-int main(void)
+void	ft_puttr(char *str)
 {
-	struct sigaction sa;
+	while (*str)
+		write(1, str, 1);
+}
+
+static void	handler(int sig, siginfo_t *info, void *useless)
+{
+	static char	c;
+	static int	i;
+	char		*string;
+
+	c = 0;
+	i = 0;
+	(void)useless;
+	if (sig == SIGUSR1)
+		c += (1 << i);
+	if (++i == 8)
+	{
+		if (c == '\0')
+		{
+			ft_puttr(string);
+			kill(info->si_pid, SIGUSR2);
+		}
+		else
+			ft_strjoin(string, c);
+		c = 0;
+		i = 0;
+	}
+	kill(info->si_pid, SIGUSR1);
+}
+
+int	main(void)
+{
+	struct sigaction	sa;
 
 	write(1, "PID: ", 5);
 	ft_putnbr(getpid());
@@ -38,4 +93,9 @@ int main(void)
 	sa.sa_flags = SA_SIGINFO | SA_RESTART;
 	sa.sa_sigaction = handler;
 	sigemptyset(&sa.sa_mask);
+	sigaction(SIGUSR1, &sa, NULL);
+	sigaction(SIGUSR2, &sa, NULL);
+	while (1)
+		pause();
+	return (0);
 }
