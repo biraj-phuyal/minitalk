@@ -6,35 +6,30 @@
 #    By: biphuyal <biphuyal@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/16 20:55:45 by biphuyal          #+#    #+#              #
-#    Updated: 2025/07/17 18:09:25 by biphuyal         ###   ########.fr        #
+#    Updated: 2025/10/31 18:30:06 by biphuyal         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = minitalk
+SERVER = server
+CLIENT = client
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
-SRCS = server.c client.c
-RM = rm -f
-TOUCH = touch
 
-OBJS = $(SRCS:.c=.o)
+all: $(SERVER) $(CLIENT)
 
-all: $(NAME)
+$(SERVER): server.o
+	$(CC) $(CFLAGS) server.o -o $(SERVER)
 
-$(NAME): $(OBJS)
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJS)
+$(CLIENT): client.o
+	$(CC) $(CFLAGS) client.o -o $(CLIENT)
 
-%.o: %.c minitalk.h
+%.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	$(RM) $(OBJS)
-	$(TOUCH) $(BONUS)
+	rm -f server.o client.o
 
 fclean: clean
-	$(RM) $(NAME)
-	$(RM) $(BONUS)
+	rm -f $(SERVER) $(CLIENT)
 
 re: fclean all
-
-.PHONY: all clean fclean re
