@@ -6,7 +6,7 @@
 /*   By: biphuyal <biphuyal@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 18:27:18 by biphuyal          #+#    #+#             */
-/*   Updated: 2025/11/01 18:34:45 by biphuyal         ###   ########.fr       */
+/*   Updated: 2025/11/01 21:31:22 by biphuyal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,39 +33,49 @@ char	*ft_strjoin(char *s1, char c)
 	size_t		total_length;
 	char		*string;
 
-	i = 0;
 	j = 0;
 	total_length = 0;
 	while (s1[total_length])
 		total_length++;
-	total_length += 2;
-	string = (char *)malloc(total_length);
+	string = (char *)malloc(total_length + 2);
 	if (!string)
 		return (NULL);
+	i = 0;
 	while (s1[i])
-		string[i++] = s1[i++];
-	while (s1[i] < total_length)
-		string[i++] = c;
-	string[i] = '\0';
+	{
+		string[i] = s1[i];
+		i++;
+	}
+	string[i] = c;
+	string[i + 1] = '\0';
 	free(s1);
 	return (string);
 }
 
 void	ft_puttr(char *str)
 {
-	while (*str)
-		write(1, str, 1);
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		write(1, &str[i], 1);
+		i++;
+	}
+	write(1, "\n", 1);
 }
 
 static void	handler(int sig, siginfo_t *info, void *useless)
 {
 	static char	c;
 	static int	i;
-	char		*string;
+	static char	*string;
 
-	c = 0;
-	i = 0;
 	(void)useless;
+	if (!string)
+		string = malloc(1);
+	if (!string)
+		return ;
 	if (sig == SIGUSR1)
 		c += (1 << i);
 	if (++i == 8)
@@ -76,7 +86,7 @@ static void	handler(int sig, siginfo_t *info, void *useless)
 			kill(info->si_pid, SIGUSR2);
 		}
 		else
-			ft_strjoin(string, c);
+			string = ft_strjoin(string, c);
 		c = 0;
 		i = 0;
 	}
@@ -90,8 +100,8 @@ int	main(void)
 	write(1, "PID: ", 5);
 	ft_putnbr(getpid());
 	write(1, "\n", 1);
-	sa.sa_flags = SA_SIGINFO | SA_RESTART;
 	sa.sa_sigaction = handler;
+	sa.sa_flags = SA_SIGINFO | SA_RESTART;
 	sigemptyset(&sa.sa_mask);
 	sigaction(SIGUSR1, &sa, NULL);
 	sigaction(SIGUSR2, &sa, NULL);

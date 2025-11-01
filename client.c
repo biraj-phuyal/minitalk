@@ -6,7 +6,7 @@
 /*   By: biphuyal <biphuyal@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 00:41:05 by biphuyal          #+#    #+#             */
-/*   Updated: 2025/11/01 18:24:54 by biphuyal         ###   ########.fr       */
+/*   Updated: 2025/11/01 21:15:41 by biphuyal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,12 @@ int	pid_atoi(char *argv)
 	pid = 0;
 	while (argv[i])
 	{
-		if (!(argv[i] >= '0' && argv[i] >= '9'))
+		if (!(argv[i] >= '0' && argv[i] <= '9'))
 			exit(write(1, "PID are only made of numbers", 28));
 		i++;
 	}
 	i = 0;
-	while (argv[i] >= '0' && argv[i] >= '9')
+	while (argv[i] >= '0' && argv[i] <= '9')
 	{
 		pid = pid * 10 + (argv[i] - '0');
 		i++;
@@ -47,7 +47,7 @@ int	pid_atoi(char *argv)
 	return(pid);
 }
 
-void	send_bits(int pid, char character)
+int	send_bits(int pid, char character)
 {
 	int	bits;
 
@@ -60,7 +60,7 @@ void	send_bits(int pid, char character)
 		else
 			kill(pid, SIGUSR2);
 		while (!g_ack)
-			usleep(100);
+			usleep(42);
 		bits++;
 	}
 	return (0);
@@ -69,22 +69,19 @@ void	send_bits(int pid, char character)
 int main(int args, char **argv)
 {
 	int	pid;
-	struct sigaction sa;
-
+	int i;
 	if (args != 3)
 		exit(write (1, "Need both the PID and message\n", 30));
 	pid = pid_atoi(argv[1]);
 	if (pid < 1)
 		exit(write (1, "PID must be > 0\n", 16));
-	sigemptyset(&sa.sa_mask);
-	sa.sa_sigaction = handle_sig;
-	sa.sa_flags = 0;
-	if (sigaction(SIGUSR1, &sa, NULL) == -1)
-		exit(1);
-	while (*argv[2])
+	signal(SIGUSR1, handle_sig);
+	signal(SIGUSR2, handle_sig);
+	i = 0;
+	while (argv[2][i])
 	{
-		send_bits(pid, *argv[2]);
-		*argv[2]++;
+		send_bits(pid, argv[2][i]);
+		i++;
 	}
 	send_bits(pid, '\0');
 	return (0);
