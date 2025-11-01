@@ -6,7 +6,7 @@
 /*   By: biphuyal <biphuyal@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 00:41:05 by biphuyal          #+#    #+#             */
-/*   Updated: 2025/11/01 21:15:41 by biphuyal         ###   ########.fr       */
+/*   Updated: 2025/11/01 21:42:22 by biphuyal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,20 @@
 #include <stdlib.h>
 #include <sys/types.h>
 
-static volatile sig_atomic_t g_ack = 0;
+static volatile sig_atomic_t	g_ack = 0;
 
-void handle_sig(int sig)
+void	handle_sig(int sig)
 {
 	if (sig == SIGUSR1)
 		g_ack = 1;
 	else if (sig == SIGUSR2)
-		write(1, "Message recived", 15);
+		write(1, "Message received", 15);
 }
+
 int	pid_atoi(char *argv)
 {
 	int	i;
-	int pid;
+	int	pid;
 
 	i = 0;
 	pid = 0;
@@ -44,7 +45,7 @@ int	pid_atoi(char *argv)
 		pid = pid * 10 + (argv[i] - '0');
 		i++;
 	}
-	return(pid);
+	return (pid);
 }
 
 int	send_bits(int pid, char character)
@@ -66,10 +67,11 @@ int	send_bits(int pid, char character)
 	return (0);
 }
 
-int main(int args, char **argv)
+int	main(int args, char **argv)
 {
 	int	pid;
-	int i;
+	int	i;
+
 	if (args != 3)
 		exit(write (1, "Need both the PID and message\n", 30));
 	pid = pid_atoi(argv[1]);
