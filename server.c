@@ -6,7 +6,7 @@
 /*   By: biphuyal <biphuyal@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 18:27:18 by biphuyal          #+#    #+#             */
-/*   Updated: 2025/11/01 21:31:22 by biphuyal         ###   ########.fr       */
+/*   Updated: 2025/11/02 23:46:35 by biphuyal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,9 @@ void	ft_putnbr(long pid)
 char	*ft_strjoin(char *s1, char c)
 {
 	size_t		i;
-	size_t		j;
 	size_t		total_length;
 	char		*string;
 
-	j = 0;
 	total_length = 0;
 	while (s1[total_length])
 		total_length++;
@@ -52,7 +50,7 @@ char	*ft_strjoin(char *s1, char c)
 	return (string);
 }
 
-void	ft_puttr(char *str)
+void	ft_putstr(char *str)
 {
 	int	i;
 
@@ -62,6 +60,7 @@ void	ft_puttr(char *str)
 		write(1, &str[i], 1);
 		i++;
 	}
+	free(str);
 	write(1, "\n", 1);
 }
 
@@ -73,7 +72,7 @@ static void	handler(int sig, siginfo_t *info, void *useless)
 
 	(void)useless;
 	if (!string)
-		string = malloc(1);
+		string = calloc(sizeof(char), 1);
 	if (!string)
 		return ;
 	if (sig == SIGUSR1)
@@ -82,7 +81,8 @@ static void	handler(int sig, siginfo_t *info, void *useless)
 	{
 		if (c == '\0')
 		{
-			ft_puttr(string);
+			ft_putstr(string);
+			string = NULL;
 			kill(info->si_pid, SIGUSR2);
 		}
 		else
