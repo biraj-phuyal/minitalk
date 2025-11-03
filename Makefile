@@ -6,22 +6,23 @@
 #    By: biphuyal <biphuyal@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/16 20:55:45 by biphuyal          #+#    #+#              #
-#    Updated: 2025/11/01 21:42:52 by biphuyal         ###   ########.fr        #
+#    Updated: 2025/11/03 17:12:47 by biphuyal         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SERVER = server
 CLIENT = client
+SRC = uttil.c
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
 all: $(SERVER) $(CLIENT)
 
-$(SERVER): server.o
-	$(CC) $(CFLAGS) server.o -o $(SERVER)
+$(SERVER): server.o $(SRC)
+	$(CC) $(CFLAGS) server.o $(SRC) -o $(SERVER)
 
-$(CLIENT): client.o
-	$(CC) $(CFLAGS) client.o -o $(CLIENT)
+$(CLIENT): client.o $(SRC)
+	$(CC) $(CFLAGS) client.o $(SRC) -o $(CLIENT)
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@

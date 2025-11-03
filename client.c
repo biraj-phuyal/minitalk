@@ -6,15 +6,11 @@
 /*   By: biphuyal <biphuyal@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 00:41:05 by biphuyal          #+#    #+#             */
-/*   Updated: 2025/11/01 21:42:22 by biphuyal         ###   ########.fr       */
+/*   Updated: 2025/11/03 17:55:24 by biphuyal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <errno.h>
-#include <signal.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <sys/types.h>
+#include "minitalk.h"
 
 static volatile sig_atomic_t	g_ack = 0;
 
@@ -23,29 +19,7 @@ void	handle_sig(int sig)
 	if (sig == SIGUSR1)
 		g_ack = 1;
 	else if (sig == SIGUSR2)
-		write(1, "Message received", 15);
-}
-
-int	pid_atoi(char *argv)
-{
-	int	i;
-	int	pid;
-
-	i = 0;
-	pid = 0;
-	while (argv[i])
-	{
-		if (!(argv[i] >= '0' && argv[i] <= '9'))
-			exit(write(1, "PID are only made of numbers", 28));
-		i++;
-	}
-	i = 0;
-	while (argv[i] >= '0' && argv[i] <= '9')
-	{
-		pid = pid * 10 + (argv[i] - '0');
-		i++;
-	}
-	return (pid);
+		write(1, "Message received\n", 17);
 }
 
 int	send_bits(int pid, char character)
@@ -61,7 +35,7 @@ int	send_bits(int pid, char character)
 		else
 			kill(pid, SIGUSR2);
 		while (!g_ack)
-			usleep(42);
+			usleep(100);
 		bits++;
 	}
 	return (0);
