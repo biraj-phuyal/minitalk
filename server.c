@@ -6,7 +6,7 @@
 /*   By: biphuyal <biphuyal@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 18:27:18 by biphuyal          #+#    #+#             */
-/*   Updated: 2025/11/02 23:46:35 by biphuyal         ###   ########.fr       */
+/*   Updated: 2025/11/03 00:33:39 by biphuyal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,11 @@ void	ft_putnbr(long pid)
 char	*ft_strjoin(char *s1, char c)
 {
 	size_t		i;
+	size_t		j;
 	size_t		total_length;
 	char		*string;
 
+	j = 0;
 	total_length = 0;
 	while (s1[total_length])
 		total_length++;
@@ -50,7 +52,7 @@ char	*ft_strjoin(char *s1, char c)
 	return (string);
 }
 
-void	ft_putstr(char *str)
+void	ft_puttr(char *str)
 {
 	int	i;
 
@@ -81,7 +83,7 @@ static void	handler(int sig, siginfo_t *info, void *useless)
 	{
 		if (c == '\0')
 		{
-			ft_putstr(string);
+			ft_puttr(string);
 			string = NULL;
 			kill(info->si_pid, SIGUSR2);
 		}
