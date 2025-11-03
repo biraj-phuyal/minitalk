@@ -6,7 +6,7 @@
 /*   By: biphuyal <biphuyal@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 18:27:18 by biphuyal          #+#    #+#             */
-/*   Updated: 2025/11/03 18:08:27 by biphuyal         ###   ########.fr       */
+/*   Updated: 2025/11/03 23:21:36 by biphuyal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	main(void)
 {
 	struct sigaction	sa;
 
-	write(1, "PID: ", 5);
+	write(1, "SERVER PID: ", 5);
 	ft_putnbr(getpid());
 	write(1, "\n", 1);
 	sa.sa_sigaction = handler;

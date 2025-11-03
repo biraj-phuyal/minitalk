@@ -6,7 +6,7 @@
 /*   By: biphuyal <biphuyal@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 17:06:18 by biphuyal          #+#    #+#             */
-/*   Updated: 2025/11/03 17:17:44 by biphuyal         ###   ########.fr       */
+/*   Updated: 2025/11/03 23:20:40 by biphuyal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,9 @@ void	*ft_calloc(size_t nmemb, size_t size)
 unsigned char	*ft_strjoin(unsigned char *s1, char c)
 {
 	size_t			i;
-	size_t			j;
 	size_t			total_length;
 	unsigned char	*string;
 
-	j = 0;
 	total_length = 0;
 	while (s1[total_length])
 		total_length++;
@@ -94,7 +92,7 @@ int	pid_atoi(char *argv)
 	while (argv[i])
 	{
 		if (!(argv[i] >= '0' && argv[i] <= '9'))
-			exit(write(1, "PID are only made of numbers", 28));
+			exit(write(1, "Invalid PID\n", 12));
 		i++;
 	}
 	i = 0;
