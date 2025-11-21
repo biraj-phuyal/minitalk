@@ -6,13 +6,14 @@
 /*   By: biphuyal <biphuyal@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 17:12:24 by biphuyal          #+#    #+#             */
-/*   Updated: 2025/11/03 23:22:13 by biphuyal         ###   ########.fr       */
+/*   Updated: 2025/11/03 17:17:37 by biphuyal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINITALK_H
 # define MINITALK_H
 
+# include <errno.h>
 # include <signal.h>
 # include <unistd.h>
 # include <stdlib.h>

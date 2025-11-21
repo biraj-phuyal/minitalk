@@ -6,7 +6,7 @@
 /*   By: biphuyal <biphuyal@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 00:41:05 by biphuyal          #+#    #+#             */
-/*   Updated: 2025/11/03 23:20:20 by biphuyal         ###   ########.fr       */
+/*   Updated: 2025/11/03 18:14:36 by biphuyal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	handle_sig(int sig)
 	if (sig == SIGUSR1)
 		g_ack = 1;
 	else if (sig == SIGUSR2)
-		write(1, "Server received the message 🫡 \n", 34);
+		write(1, "Message received\n", 17);
 }
 
 int	send_bits(int pid, char character)

@@ -6,19 +6,19 @@
 /*   By: biphuyal <biphuyal@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 18:27:18 by biphuyal          #+#    #+#             */
-/*   Updated: 2025/11/03 23:21:36 by biphuyal         ###   ########.fr       */
+/*   Updated: 2025/11/21 17:23:34 by biphuyal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
-static void	handler(int sig, siginfo_t *info, void *useless)
+static void	handler(int sig, siginfo_t *info, void *unused)
 {
 	static unsigned char	c;
 	static int				i;
 	static unsigned char	*string;
 
-	(void)useless;
+	(void)unused;
 	if (!string)
 		string = ft_calloc(sizeof(unsigned char), 1);
 	if (!string)
@@ -45,7 +45,7 @@ int	main(void)
 {
 	struct sigaction	sa;
 
-	write(1, "SERVER PID: ", 5);
+	write(1, "PID: ", 5);
 	ft_putnbr(getpid());
 	write(1, "\n", 1);
 	sa.sa_sigaction = handler;
